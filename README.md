@@ -33,6 +33,7 @@ Advantages:
     Here, the same type of event will be consumed by the same consumer, So it will consume in the same order which they were published.
 
 Disadvantages
+
     1. There's a small race condition between RabbitMQ updating the queue's internal stats about consumers and when clients issue basic.consume commands. The problem with this is that if your client issues many basic.consume commands without too much time in between, it might happen that the plugin assigns the consumers to queues in an uneven way. Like one queue is assigned 2 consumers and another queue is assigned no consumers.(This problem can be solved by putting some delay on each basic.consume)
     
     2. The number of consumers and the number of logical queues should be the same. Suppose I have configured 3 logical queues and for that I have 3 consumers. If we want to add a new pod of that service, then the number of consumers becomes 6, So we need to increase the number of logical queues to 6.
