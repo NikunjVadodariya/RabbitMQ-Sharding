@@ -38,9 +38,12 @@ Disadvantages
 How to use the POC:
 
 Step: 1: Invoke the file declare_exchange.py
+
 Step: 2: Invoke following command fron the terminal for windows os.For other os please get reference from https://www.rabbitmq.com/parameters.html
         command: rabbitmqctl.bat set_policy sharding_test-shard ^
                 "^sharding_test$" "{""shards-per-node"":2, ""routing-key"":""sharding_test""}" ^
                 --apply-to exchanges
+                
  Step: 3: Invoke the file consume_rabbitmq_sharding_example.py
+ 
  Step: 4: Invoke the file publish_rabbitmq_sharding_example.py
