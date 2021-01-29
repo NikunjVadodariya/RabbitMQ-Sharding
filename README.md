@@ -30,7 +30,8 @@ Example:
 Note: Here We have used 2 types of Images like Image-1 and Image-2 in above example. But it is possible that we can have many types of Images like 1000 types. So In that case also the events should be divided between 2 consumers that the same type of event will be consumed by the same consumer.
 
 Advantages: 
-    Here, the same type of event will be consumed by the same consumer, So it will consume in the same order which they were published.
+
+    1. Here, the same type of event will be consumed by the same consumer, So it will consume in the same order which they were published.
 
 Disadvantages
 
