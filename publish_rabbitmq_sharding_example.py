@@ -1,15 +1,7 @@
 import json
-import os
-from enum import Enum
 import random
 
 import pika
-
-
-class QueueEnum(Enum):
-    CONVERSATION_DATA_RECOVERY = {'route': 'conversation_analytics_data_recovery',
-                                  'queue': 'conversation_analytics_data_recovery_q',
-                                  'exchange_type': 'direct', 'exchange_name': 'wotnot.direct'}
 
 
 def rabbit_mq_connect():
@@ -47,22 +39,12 @@ def publish_message(route_key, payload, exchange_type='direct', delivery_mode=2,
                               ))
 
 
-def create_queues():
-    with RabbitMqConnection() as conn:
-        for data in QueueEnum:
-            channel = conn.channel()
-            channel.exchange_declare(exchange=data.value['exchange_name'],
-                                     exchange_type=data.value['exchange_type'], durable=True)
-            channel.queue_declare(queue=data.value['queue'], durable=True)
-            channel.queue_bind(exchange=data.value['exchange_name'], routing_key=data.value['route'],
-                               queue=data.value['queue'])
-
 def do_process():
     for i in range(10):
-        n = random.randint(0, 100)
-        publish_message("conversation_key_{}".format(n%3), {"conversation_key": "conversation_key_{}".format(n%3)},
+        n = random.randint(0, 10)
+        publish_message("conversation_key_{}".format(n % 3), {"conversation_key": "conversation_key_{}".format(n % 3)},
                         "x-modulus-hash",
-                        exchange_name="test1")
+                        exchange_name="sharding_test")
 
 
 if __name__ == '__main__':
@@ -82,5 +64,4 @@ if __name__ == '__main__':
                                                host=RABBIT_MQ_HOST,
                                                vhost="%2f",
                                                port=RABBIT_MQ_PORT)
-    create_queues()
     do_process()

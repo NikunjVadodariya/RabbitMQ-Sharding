@@ -1,15 +1,4 @@
-import json
-import os
-from enum import Enum
-import random
-
 import pika
-
-
-class QueueEnum(Enum):
-    CONVERSATION_DATA_RECOVERY = {'route': 'conversation_analytics_data_recovery',
-                                  'queue': 'conversation_analytics_data_recovery_q',
-                                  'exchange_type': 'direct', 'exchange_name': 'wotnot.direct'}
 
 
 def rabbit_mq_connect():
@@ -35,22 +24,10 @@ class RabbitMqConnection(object):
         rabbit_mq_close(self.conn)
 
 
-def publish_message(route_key, payload, exchange_type='direct', delivery_mode=2, exchange_name='wotnot.direct'):
-    with RabbitMqConnection() as conn:
-        channel = conn.channel()
-        channel.exchange_declare(exchange=exchange_name, exchange_type=exchange_type, durable=True)
-        channel.basic_publish(exchange=exchange_name,
-                              routing_key=route_key,
-                              body=json.dumps(payload, ensure_ascii=False),
-                              properties=pika.BasicProperties(
-                                  delivery_mode=delivery_mode,
-                              ))
-
-
 def create_exchanges():
     with RabbitMqConnection() as conn:
         channel = conn.channel()
-        channel.exchange_declare(exchange="test2",
+        channel.exchange_declare(exchange="sharding_test",
                                  exchange_type="x-modulus-hash", durable=True)
 
 
