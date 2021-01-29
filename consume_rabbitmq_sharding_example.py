@@ -54,7 +54,7 @@ class ShardConsumer(Thread):
 
 
 def start_consumer():
-    for i in range(QueueEnum.CONVERSATION_DATA_RECOVERY.value['worker_count']):
+    for i in range(2):
         time.sleep(1)
         ShardConsumer(queue_name="sharding_test", consumer_name=i)
 
