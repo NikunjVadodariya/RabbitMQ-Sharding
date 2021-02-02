@@ -46,14 +46,16 @@ Disadvantages
     
 How to use the POC:
 
-Step: 1: Invoke the file declare_exchange.py
+Step 1: Invoke the command rabbitmq-plugins enable rabbitmq_sharding
 
-Step: 2: Invoke following command fron the terminal.
+Step: 2: Invoke the file declare_exchange.py
+
+Step: 3: Invoke following command fron the terminal.
         Windows command: rabbitmqctl.bat set_policy sharding_test-shard ^
                 "^sharding_test$" "{""shards-per-node"":2, ""routing-key"":""sharding_test""}" ^
                 --apply-to exchanges
         Ubuntu command: sudo rabbitmqctl set_policy test-shard "^hello$" '{"shards-per-node":2, "routing-key":"hello"}' --priority 1 --apply-to exchanges
                 
- Step: 3: Invoke the file consume_rabbitmq_sharding_example.py
+ Step: 4: Invoke the file consume_rabbitmq_sharding_example.py
  
- Step: 4: Invoke the file publish_rabbitmq_sharding_example.py
+ Step: 5: Invoke the file publish_rabbitmq_sharding_example.py
